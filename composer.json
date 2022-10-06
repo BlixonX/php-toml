@@ -1,0 +1,15 @@
+{
+    "name": "blixon/php-toml",
+    "description": "Library for parsing TOML files to php array.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Blixon\\PhpToml\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "minwork/array": "dev-master"
+    }
+}
