@@ -3,10 +3,14 @@ namespace Blixon\PhpToml;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+// require "PhpTomlTraits.php";
+
 use Minwork\Helper\Arr;
 
 class PhpToml
 {
+    use Validators;
+
     private const EMPTY = 0;
     private const KEYVAL = 1;
     private const OBJ = 2;
@@ -48,19 +52,27 @@ class PhpToml
         if(strlen($line) == 0 || $line[0] == "#")
             return [ "code" => self::EMPTY ];
 
+
+
         $keyVal = null;
-        preg_match("/^(.*?)=(?:\"|')(.*?)(?:\"|')/", $line, $keyVal);
+        preg_match("/^(.*?)=(.*?)$/", $line, $keyVal);
+
         if(sizeof($keyVal) > 0)
         {
+            $postValidationValue = self::validateString($keyVal[2]) ?? self::validateNumber($keyVal[2]);
+            
             return [
                 "code" => self::KEYVAL,
-                "key" => $keyVal[1],
-                "val" => $keyVal[2]
+                "key" => trim($keyVal[1]),
+                "val" => $postValidationValue
             ];
         }
         
+
+
         $objName = null;
         preg_match("/^\[(.*?)\]/", $line, $objName);
+
         if(sizeof($objName) > 0)
         {
             return [
@@ -69,5 +81,6 @@ class PhpToml
             ];
         }
     }
+
 
 }

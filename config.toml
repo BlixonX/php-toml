@@ -1,10 +1,12 @@
 title="example title"
-                            
+
 date="today"
 
 [sus.mogus]
-wink="bing"
-hey="girl"
+maslo=1000
+wink=+0.267
+yo=-60
+hey="girl\""
 
 [sus.glombus] # some comment
-anotha="test"
+anotha = "test"
