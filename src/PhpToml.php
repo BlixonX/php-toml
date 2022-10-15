@@ -59,7 +59,11 @@ class PhpToml
 
         if(sizeof($keyVal) > 0)
         {
-            $postValidationValue = self::validateString($keyVal[2]) ?? self::validateNumber($keyVal[2]);
+            $postValidationValue = 
+            self::validateString ($keyVal[2]) ??
+            self::validateNumber ($keyVal[2]) ?? 
+            self::validateBoolean($keyVal[2]) ??
+            "NULL";
             
             return [
                 "code" => self::KEYVAL,

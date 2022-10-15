@@ -2,6 +2,8 @@
 
 namespace Blixon\PhpToml;
 
+use Exception;
+
 trait Validators
 {
     private static function validateString(string $string): ?string
@@ -10,17 +12,22 @@ trait Validators
 
         if( ($string[0] != '"' && $string[0] != "'")   ||   ($string[strlen($string)-1] != '"' && $string[strlen($string)-1] != "'") )
             return null;
+        if( $string[0] != $string[strlen($string)-1] )
+            return null;
         
         $string = substr($string, 1, -1); //Cutting off quote characters ( "text"  -->  text ).
         $string = strtr($string, ['\"' => '"', "\'" => "'"]); //Replacing escaped quote characters to their proper form ( te\"xt  -->  te"xt ). 
         return $string;
     }
 
-    private static function validateNumber(string $string): int | float | null
+    private static function validateNumber(string $string): int | float | null //TODO: Add eponential value support
     {
         $string = trim($string);
         $matches = null;
-        preg_match("/(-|\+)?(\d*\.?\d*)/", $string, $matches);
+        preg_match("/(-|\+)?([0-9_]*\.?[0-9_]*)/", $string, $matches); //separates value into +/- and the number (including underscore separation)
+
+        if(sizeof($matches) < 3)
+            return null;
 
         if($matches[2] == "")
             return null;
@@ -29,9 +36,26 @@ trait Validators
         
         $multiplier = ($matches[1] == "-" ? -1 : 1);
 
-        return $matches[2] * $multiplier;
-        // TODO: MAKE UNDERSCORE DETECTION AND REMOVAL
+        try
+        {
+            return strtr($matches[2], ["_" => ""]) * $multiplier; //clears value of underscore separators and multiplies by +1 or -1.
+        }
+        catch(Exception)
+        {
+            return null;
+        }
+    }
 
-        // $string = strtr($string, ["_" => ""]);
-    } 
+    private static function validateBoolean(string $string): ?bool
+    {
+        switch($string)
+        {
+            case "true":
+                return true;
+            case "false":
+                return false;
+            default:
+                return null;
+        }
+    }
 };

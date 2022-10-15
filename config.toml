@@ -4,9 +4,9 @@ date="today"
 
 [sus.mogus]
 maslo=1000
-wink=+0.267
+wink=true
 yo=-60
-hey="girl\""
+hey="bhlah\""
 
 [sus.glombus] # some comment
 anotha = "test"

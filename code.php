@@ -17,4 +17,4 @@ $tomlParsed = PhpToml::parseToml($tomlText);
 
 preEcho(print_r($tomlParsed, true));
 
-// echo $tomlParsed["sus"]["mogus"]["hey"];
+var_dump($tomlParsed["sus"]["mogus"]["wink"]);
