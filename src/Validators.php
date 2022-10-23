@@ -6,7 +6,7 @@ use Exception;
 
 trait Validators
 {
-    private static function validateString(string $string): ?string
+    private static function validateString(string $string): ?string //TODO: Multi-line basic/literal strings
     {
         $string = trim($string);
 
@@ -17,6 +17,15 @@ trait Validators
         
         $string = substr($string, 1, -1); //Cutting off quote characters ( "text"  -->  text ).
         $string = strtr($string, ['\"' => '"', "\'" => "'"]); //Replacing escaped quote characters to their proper form ( te\"xt  -->  te"xt ). 
+        
+        $string = strtr($string, 
+        ["\\t" => "\t",
+        "\\n" => "\n",
+        "\\f" => "\f",
+        "\\r" => "\r",
+        "\\\\" => "\\"
+        ]); //Other escaped characters
+
         return $string;
     }
 
@@ -57,5 +66,15 @@ trait Validators
             default:
                 return null;
         }
+    }
+
+    private static function validateBinary(string $string): ?int
+    {
+        $matches = null;
+        preg_match("/(0b)([0-1_]+)/", $string, $matches);
+        if(sizeof($matches) == 0)
+            return null;
+            
+        return bindec($matches[2]);
     }
 };

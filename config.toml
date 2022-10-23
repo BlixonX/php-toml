@@ -3,10 +3,14 @@ title="example title"
 date="today"
 
 [sus.mogus]
-maslo=1000
-wink=true
+"maslo"=1000
+'wink'=true
 yo=-60
 hey="bhlah\""
+binary = 0b10_1
 
 [sus.glombus] # some comment
-anotha = "test"
+'quoted "value"' = "test"
+"bingus.bus" = "abc"
+"bingus.gus" = "what am i doing here"
+"bingus.gus.furtherus" = "It works somehow."

@@ -59,15 +59,22 @@ class PhpToml
 
         if(sizeof($keyVal) > 0)
         {
+            $key = trim($keyVal[1]);
+
+            if( $key[0] == $key[strlen($key)-1] && ($key[0] == '"' || $key[0] == "'") ) //Removing quotation marks on the keys
+                $key = substr($key, 1, -1);
+
+
             $postValidationValue = 
             self::validateString ($keyVal[2]) ??
+            self::validateBinary ($keyVal[2]) ??
             self::validateNumber ($keyVal[2]) ?? 
             self::validateBoolean($keyVal[2]) ??
             "NULL";
             
             return [
                 "code" => self::KEYVAL,
-                "key" => trim($keyVal[1]),
+                "key" => $key,
                 "val" => $postValidationValue
             ];
         }
