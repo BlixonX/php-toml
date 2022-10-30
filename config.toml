@@ -8,6 +8,8 @@ date="today"
 yo=-60
 hey="bhlah\""
 binary = 0b10_1
+octal = 0o20_25
+hex= 0xDEAD_BEEF
 
 [sus.glombus] # some comment
 'quoted "value"' = "test"

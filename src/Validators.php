@@ -77,4 +77,24 @@ trait Validators
             
         return bindec($matches[2]);
     }
+
+    private static function validateOctal(string $string): ?int
+    {
+        $matches = null;
+        preg_match("/(0o)([0-7_]+)/", $string, $matches);
+        if(sizeof($matches) == 0)
+            return null;
+            
+        return octdec($matches[2]);
+    }
+
+    private static function validateHexadecimal(string $string): ?int
+    {
+        $matches = null;
+        preg_match("/(0x)([0-9A-F_]+)/", $string, $matches);
+        if(sizeof($matches) == 0)
+            return null;
+            
+        return hexdec($matches[2]);
+    }
 };

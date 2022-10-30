@@ -66,10 +66,12 @@ class PhpToml
 
 
             $postValidationValue = 
-            self::validateString ($keyVal[2]) ??
-            self::validateBinary ($keyVal[2]) ??
-            self::validateNumber ($keyVal[2]) ?? 
-            self::validateBoolean($keyVal[2]) ??
+            self::validateString      ($keyVal[2]) ??
+            self::validateBinary      ($keyVal[2]) ??
+            self::validateOctal       ($keyVal[2]) ??
+            self::validateHexadecimal ($keyVal[2]) ??
+            self::validateNumber      ($keyVal[2]) ?? 
+            self::validateBoolean     ($keyVal[2]) ??
             "NULL";
             
             return [
